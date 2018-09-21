@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">TreasureHunt</string>
+    <string name="character_popup_text_default">Where was this quote said? Click on one of the options below</string>
+    <string name="character_popup_title_default"> Would I rather be feared or loved? Easy. Both. I want people to be afraid of how much they love me. </string>
+    <string name="negative_popup_text_default"> Michael Scott would be disappointed... Please try again.</string>
+    <string name="negative_popup_title_default"> Wrong Answer! </string>
+    <string name="correct_popup_text_default">You just unlocked the key to go into the Office! Click continue to solve the next challenege!</string>
+    <string name="correct_popup_title_default">Woo! Correct!</string>
+</resources>
