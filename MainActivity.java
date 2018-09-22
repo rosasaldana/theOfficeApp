@@ -28,6 +28,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         michaelsOfficeBtn = (Button) findViewById(R.id.MichaelsOfficeBtn);
         TobyCubicleBtn = (Button) findViewById(R.id.TobyButn);
         DwightDeskBtn = (Button) findViewById(R.id.DwigthDeskBtn);
+        acceptButton = (Button) findViewById(R.id.btnAccept);
 
         // dialog box
         dialogBox = new Dialog(this);
