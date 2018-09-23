@@ -1,22 +1,34 @@
 package com.example.hxrlab.treasurehunt;
 
 import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener{
+public class MainActivity extends AppCompatActivity implements View.OnClickListener, LocationListener {
     Dialog dialogBox;
     Button michaelButton, acceptButton;
     TextView titleTv, messageTv;
     ImageView closePopupPositiveImg, closePopupNegativeImg, closeCorrectImg;
     Button receptionBtn, michaelsOfficeBtn, DwightDeskBtn, TobyCubicleBtn;
+
+    // location permission
+    private final int REQUEST_PERMISSION_ACCESS_FINE_LOCATION=1;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +51,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         michaelsOfficeBtn.setOnClickListener(this);
         TobyCubicleBtn.setOnClickListener(this);
         DwightDeskBtn.setOnClickListener(this);
+
+        // create location manager
+        LocationManager locationManager = (LocationManager)getSystemService(Context.LOCATION_SERVICE);
+
+        // GPS User Permission Request
+        if ( ContextCompat.checkSelfPermission( this, android.Manifest.permission.ACCESS_FINE_LOCATION ) != PackageManager.PERMISSION_GRANTED ) {
+            ActivityCompat.requestPermissions( this, new String[] {  android.Manifest.permission.ACCESS_FINE_LOCATION  },
+                    REQUEST_PERMISSION_ACCESS_FINE_LOCATION );
+        }
+
+        // Checks for the user's location every 500 ms and updates the system if the distance is 10 m apart
+        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 500, 10, this);
 
     }
 
@@ -123,12 +147,33 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         startActivity(intent);
     }
 
-
-
-/**
-    public void openSceneOneActivity() {
-        Intent intent = new Intent(this, SceneOneActivity.class);
-        startActivity(intent);
+    @Override
+    public void onLocationChanged(Location location) {
+        double longitude = location.getLongitude();
+        double latitude = location.getLatitude();
+        String s = "This is the longitude: " + longitude + " This is latitude: " + latitude;
+        Log.d("coordinates",s);
+        if (longitude == 41.404498333333336 && latitude == -75.73199833333334){
+            Log.d("inside", "got inside the if statement main activity");
+            showCorrectDialogBox();
+        }
+        else {
+            showNegativePopup();
+        }
     }
- **/
+
+    @Override
+    public void onStatusChanged(String provider, int status, Bundle extras) {
+
+    }
+
+    @Override
+    public void onProviderEnabled(String provider) {
+
+    }
+
+    @Override
+    public void onProviderDisabled(String provider) {
+
+    }
 }
