@@ -1,17 +1,20 @@
-package com.example.hxrlab.treasurehunt;
+package com.example.#######.treasurehunt;
 
 import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.location.Location;
+import android.location.LocationListener;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-public class SceneOneActivity extends AppCompatActivity implements View.OnClickListener {
+public class SceneOneActivity extends AppCompatActivity implements View.OnClickListener, LocationListener {
 
     Dialog dialogBox;
     Button jimButton;
@@ -137,5 +140,33 @@ public class SceneOneActivity extends AppCompatActivity implements View.OnClickL
     public void openSceneTwoActivity() {
         Intent intent = new Intent(this, SceneTwoActivity.class);
         startActivity(intent);
+    }
+
+    @Override
+    public void onLocationChanged(Location location) {
+        double longitude = location.getLongitude();
+        double latitude = location.getLatitude();
+        if (longitude == 40.4352 && latitude == -80.37909833333333){
+            Log.d("inside2", "Inside Activity 2");
+            showCorrectDialogBox();
+        }
+        else {
+            showNegativePopup();
+        }
+    }
+
+    @Override
+    public void onStatusChanged(String provider, int status, Bundle extras) {
+
+    }
+
+    @Override
+    public void onProviderEnabled(String provider) {
+
+    }
+
+    @Override
+    public void onProviderDisabled(String provider) {
+
     }
 }
